@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CustomTextFormField extends StatefulWidget {
+  final Function(String) onSaved;
   final TextEditingController controller;
   final String hintText;
   final String regEx;
@@ -10,6 +11,7 @@ class CustomTextFormField extends StatefulWidget {
 
   const CustomTextFormField({
     super.key,
+    required this.onSaved,
     required this.controller,
     required this.hintText,
     required this.regEx,
@@ -29,6 +31,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: widget.controller,
+      onSaved: (value) => widget.onSaved(value!),
       cursorColor: Colors.white,
       style: const TextStyle(color: Colors.white),
       // keyboardType: widget.keyboardType,

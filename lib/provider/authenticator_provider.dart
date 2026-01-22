@@ -17,4 +17,20 @@ class AuthenticatorProvider extends ChangeNotifier {
     _databaseService = GetIt.instance.get<DatabaseService>();
     _navigationService = GetIt.instance.get<NavigationService>();
   }
+
+  Future<void> login(String email, String password) async {
+    try {
+      await _auth.signInWithEmailAndPassword(email: email, password: password);
+      // _navigationService.navigateToRoute('/home');
+      // print(_auth.currentUser);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        print('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        print('Wrong password provided for that user.');
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
 }
