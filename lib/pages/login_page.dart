@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trachat_app/widgets/rounded_button.dart';
 
 //Widgets
 import '../widgets/custom_input_field.dart';
@@ -15,6 +16,16 @@ class _LoginPageState extends State<LoginPage> {
   late double _deviceWidth;
 
   final _loginFormKey = GlobalKey<FormState>();
+  final emailCtr = TextEditingController();
+  final passwordCtr = TextEditingController();
+
+  @override
+  void dispose() {
+    emailCtr.dispose();
+    passwordCtr.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     _deviceHeight = MediaQuery.of(context).size.height;
@@ -22,71 +33,99 @@ class _LoginPageState extends State<LoginPage> {
     return _buildUI();
   }
 
-  // Widget _buildUI() => Scaffold(); //Same
   Widget _buildUI() {
     return Scaffold(
       body: Container(
         padding: EdgeInsets.symmetric(
-          horizontal: _deviceWidth * 0.03,
-          vertical: _deviceHeight * 0.02,
+          horizontal: _deviceWidth * 0.08,
+          vertical: _deviceHeight * 0.05,
         ),
         height: _deviceHeight * 0.98,
         width: _deviceWidth * 0.97,
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [_pageTitle(), _loginForm()],
+        child: Form(
+          key: _loginFormKey,
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              _pageTitle(),
+              const SizedBox(height: 40),
+              _loginForm(),
+              const SizedBox(height: 20),
+              _loginButton(),
+              const SizedBox(height: 20),
+              _registerAccountLink(),
+            ],
+          ),
         ),
       ),
     );
   }
 
   Widget _pageTitle() {
-    final double deviceHeight = MediaQuery.of(context).size.height;
-    // print("_deviceHeight = $deviceHeight");
-
-    return Container(
-      height: deviceHeight * 0.1, // 10% of screen height
-      padding: EdgeInsets.symmetric(horizontal: 16),
-      alignment: Alignment.center, // center text vertically & horizontally
-      // color: Colors.blue, // optional background
-      child: Text(
-        'TraChat',
-        style: TextStyle(
-          fontSize: 40,
-          color: Colors.white,
-          fontWeight: FontWeight.w600,
-        ),
+    return Text(
+      'TraChat',
+      style: TextStyle(
+        fontSize: 40,
+        color: Colors.white,
+        fontWeight: FontWeight.w600,
       ),
     );
   }
 
   Widget _loginForm() {
-    return Container(
-      height: _deviceHeight * 0.18,
-      child: Form(
-        key: _loginFormKey,
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            CustomTextFormField(
-              onSaved: (value) {},
-              regEx:
-                  r'^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$', // RegEx for Email
-              hintText: "Input Email",
-              obscureText: false,
-            ),
+    return Column(
+      children: [
+        CustomTextFormField(
+          controller: emailCtr,
+          hintText: "Email",
+          regEx: r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
+          requiredMessage: "Email is required",
+          invalidMessage: "Invalid email",
+        ),
+        const SizedBox(height: 20),
+        CustomTextFormField(
+          controller: passwordCtr,
+          hintText: "Password",
+          isPassword: true,
+          regEx: r'^.{6,}$',
+          requiredMessage: "Password is required",
+          invalidMessage: "Minimum 6 characters",
+        ),
+        const SizedBox(height: 30),
+        // SizedBox(
+        //   width: double.infinity,
+        //   child: ElevatedButton(
+        //     onPressed: () {
+        //       if (_loginFormKey.currentState!.validate()) {
+        //         print(emailCtr.text);
+        //         print(passwordCtr.text);
+        //       }
+        //     },
+        //     child: const Text("Login"),
+        //   ),
+        // ),
+      ],
+    );
+  }
 
-            CustomTextFormField(
-              onSaved: (value) {},
-              regEx: r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d\W]{8,}$', // 8+ chars, 1 upper, 1 lower, 1 digit
-              hintText: "Password",
-              obscureText: true,
-            ),
-          ],
+  Widget _loginButton() {
+    return RoundedButton(
+      name: "Login",
+      height: _deviceHeight * 0.065,
+      width: _deviceWidth * 0.65,
+      onPressed: () {},
+    );
+  }
+
+  Widget _registerAccountLink() {
+    return GestureDetector(
+      onTap: () => {},
+      child: Container(
+        child: Text(
+          "Register new account?",
+          style: TextStyle(color: Colors.blueAccent),
         ),
       ),
     );
