@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class ChatUser {
   final String uid;
   final String name;
@@ -20,7 +22,7 @@ class ChatUser {
       name: json['name'],
       email: json['email'],
       imageUrl: json['imageUrl'],
-      lastActive: (json['lastActive']) as DateTime,
+      lastActive: (json['lastActive'] as Timestamp).toDate(),
     );
   }
   // Convert a Map to a ChatUser object
