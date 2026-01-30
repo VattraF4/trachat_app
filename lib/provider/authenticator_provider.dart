@@ -41,10 +41,13 @@ class AuthenticatorProvider extends ChangeNotifier {
             "imageUrl": userData['imageUrl'],
             'lastActive': userData['lastActive'],
           });
-          print(users.toMap());
+          // print(users.toMap());
+          _navigationService.removeAnyNavigateToRoute('/home');
         }
       } else {
-        print("${DateTime.now()}: Not Authenticated");
+        // print("${DateTime.now()}: Not Authenticated");
+         
+        _navigationService.removeAnyNavigateToRoute('/login')
       }
       notifyListeners(); // Now this waits for everything
     });

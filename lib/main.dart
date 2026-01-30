@@ -11,6 +11,7 @@ import '../provider/authenticator_provider.dart';
 //Page
 import './pages/splash_page.dart';
 import './pages/login_page.dart';
+import './pages/home_page.dart';
 
 void main() {
   runApp(
@@ -46,7 +47,10 @@ class MainApp extends StatelessWidget {
         ),
         navigatorKey: NavigationService.navigatorKey,
         initialRoute: '/login',
-        routes: {'/login': (BuildContext context) => LoginPage()},
+        routes: {
+          '/login': (BuildContext context) => LoginPage(),
+          '/home': (BuildContext context) => HomePage(), 
+        },
       ),
     );
   }
