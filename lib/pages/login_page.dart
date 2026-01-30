@@ -20,6 +20,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final _navigation = NavigationService();
   final _loginFormKey = GlobalKey<FormState>();
   final emailCtr = TextEditingController();
   final passwordCtr = TextEditingController();
@@ -97,7 +98,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               const SizedBox(height: 20),
               GestureDetector(
-                onTap: () {},
+                onTap: () => _navigation.navigateToRoute('/register'),
                 child: Text(
                   "Register new account?",
                   style: TextStyle(color: Colors.blueAccent),

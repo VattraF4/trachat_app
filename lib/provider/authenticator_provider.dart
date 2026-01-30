@@ -21,7 +21,7 @@ class AuthenticatorProvider extends ChangeNotifier {
     _auth = FirebaseAuth.instance;
     _databaseService = GetIt.instance.get<DatabaseService>();
     _navigationService = GetIt.instance.get<NavigationService>();
-    // _auth.signOut();
+    _auth.signOut(); //for testin Only
 
     _auth.authStateChanges().listen((user) async {
       // ← ADD async HERE
@@ -46,8 +46,8 @@ class AuthenticatorProvider extends ChangeNotifier {
         }
       } else {
         // print("${DateTime.now()}: Not Authenticated");
-         
-        _navigationService.removeAnyNavigateToRoute('/login')
+
+        _navigationService.removeAnyNavigateToRoute('/login');
       }
       notifyListeners(); // Now this waits for everything
     });
