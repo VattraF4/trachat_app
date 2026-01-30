@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class CustomTextFormField extends StatefulWidget {
   final Function(String)? onSaved;
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final String hintText;
   final String regEx;
   final bool isPassword;
@@ -12,7 +12,7 @@ class CustomTextFormField extends StatefulWidget {
   const CustomTextFormField({
     super.key,
     this.onSaved,
-    required this.controller,
+    this.controller,
     required this.hintText,
     required this.regEx,
     required this.requiredMessage,

@@ -21,7 +21,7 @@ class AuthenticatorProvider extends ChangeNotifier {
     _auth = FirebaseAuth.instance;
     _databaseService = GetIt.instance.get<DatabaseService>();
     _navigationService = GetIt.instance.get<NavigationService>();
-    _auth.signOut(); //for testin Only
+    // _auth.signOut(); //for testin Only
 
     _auth.authStateChanges().listen((user) async {
       // ← ADD async HERE
@@ -68,6 +68,32 @@ class AuthenticatorProvider extends ChangeNotifier {
       } else if (e.code == 'wrong-password') {
         print('Wrong password provided for that user.');
       }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  // Register Functon
+  Future<String?> registerUserUsingEmailAndPassword(
+    String email,
+    String password,
+  ) async {
+    try {
+      UserCredential credential = await _auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      return credential.user!.uid;
+    } on FirebaseAuthException {
+      print("Error Registerin user");
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> logout() async {
+    try {
+      await _auth.signOut();
     } catch (e) {
       print(e);
     }

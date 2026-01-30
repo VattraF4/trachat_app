@@ -20,7 +20,7 @@ class ChatUser {
       name: json['name'],
       email: json['email'],
       imageUrl: json['imageUrl'],
-      lastActive: DateTime.parse(json['lastActive']),
+      lastActive: (json['lastActive']) as DateTime,
     );
   }
   // Convert a Map to a ChatUser object
@@ -47,5 +47,4 @@ class ChatUser {
   bool wasRecentlyActiveHours() {
     return DateTime.now().difference(lastActive).inHours < 24;
   }
-
 }

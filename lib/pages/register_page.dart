@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import '../services/media_service.dart';
 import '../services/database_service.dart';
 import '../services/cloud_storage_service.dart';
+import '../services/navigation_service.dart';
 
 //Widgets
 import '../widgets/custom_input_field.dart';
@@ -28,10 +29,28 @@ class _RegisterPageState extends State<RegisterPage> {
   late double _deviceHeigh;
   late double _deviceWidth;
 
+  String? _email;
+  String? _paswword;
+  String? _name;
   PlatformFile? _profileImage;
+
+  //Provider Action Button
+  late AuthenticatorProvider _auth;
+
+  //Service
+  late DatabaseService _db;
+  late CloudStorageService _cloudStorage;
+  late NavigationService _navigation;
+
+  final _registerFormKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
+    _auth = Provider.of<AuthenticatorProvider>(context);
+    _db = GetIt.instance.get<DatabaseService>();
+    _cloudStorage = GetIt.instance.get<CloudStorageService>();
+    _navigation = GetIt.instance.get<NavigationService>();
+
     _deviceHeigh = MediaQuery.of(context).size.height;
     _deviceWidth = MediaQuery.of(context).size.width;
     return _buildUI();
@@ -54,11 +73,12 @@ class _RegisterPageState extends State<RegisterPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             _profileImageField(),
-            const SizedBox(height: 6), // space between image and text
             const Text(
               "Click to Change Image",
               style: TextStyle(color: Colors.white, fontSize: 16),
             ),
+            _regiesterForm(),
+            _registerButton(),
           ],
         ),
       ),
@@ -83,14 +103,97 @@ class _RegisterPageState extends State<RegisterPage> {
             size: _deviceHeigh * 0.15,
           );
         } else {
-          return RoundedImageNetowrk(
+          // ============= Use Image from Internet ==========
+          return RoundedImageNetwork(
             key: UniqueKey(),
             imagePath:
                 'https://ranavattra.com/portfolio/assets/image/fav-image.png',
+
             size: _deviceHeigh * 0.15,
           );
         }
       }(),
+    );
+  }
+
+  Widget _regiesterForm() {
+    return Container(
+      height: _deviceHeigh * 0.35,
+      child: Form(
+        key: _registerFormKey,
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            CustomTextFormField(
+              onSaved: (value) {
+                setState(() {
+                  _name = value;
+                });
+              },
+              hintText: "Name",
+              regEx: r'.{8,}',
+              requiredMessage: 'Name is require',
+              invalidMessage: "Name is not valid",
+            ),
+            SizedBox(height: 10),
+            CustomTextFormField(
+              onSaved: (value) {
+                setState(() {
+                  _email = value;
+                });
+              },
+              hintText: "Email",
+              regEx: r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
+              requiredMessage: 'Email is require',
+              invalidMessage: "Email is not valid",
+            ),
+            SizedBox(height: 10),
+            CustomTextFormField(
+              onSaved: (value) {
+                setState(() {
+                  _paswword = value;
+                });
+              },
+              hintText: "Password",
+              regEx: r'^.{6,}$',
+              requiredMessage: 'Password is require',
+              invalidMessage: "Pasword is not valied",
+              isPassword: true,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _registerButton() {
+    return RoundedButton(
+      name: "Register",
+      height: _deviceHeigh * 0.065,
+      width: _deviceHeigh * 0.65,
+      onPressed: () async {
+        if (_registerFormKey.currentState!.validate() &&
+            _profileImage != null) {
+          //Continue register user
+
+          _registerFormKey.currentState!.save();
+
+          String? uid = await _auth.registerUserUsingEmailAndPassword(
+            _email!,
+            _paswword!,
+          );
+          String? imageUrl = await _cloudStorage.saveUserImageToStorage(
+            uid!,
+            _profileImage!,
+          );
+          await _db.createUser(uid, _email!, _name!, imageUrl!);
+          // _navigation.goBack();
+          await _auth.logout();
+          await _auth.login(_email!, _paswword!);
+        }
+      },
     );
   }
 }
