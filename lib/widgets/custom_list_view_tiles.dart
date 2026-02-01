@@ -15,7 +15,7 @@ class CustomListViewTile extends StatelessWidget {
   final String subtitle;
   final String imagePath;
   final bool isActive; // Use to show online status
-  final bool isAcitivty; // Use to show activity
+  final bool isAcitivty; // Use to show activity like typing message 
   final Function onTap;
 
   //Constructor
@@ -45,6 +45,23 @@ class CustomListViewTile extends StatelessWidget {
         title,
         style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
       ),
+      subtitle: isAcitivty
+          ? Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SpinKitThreeBounce(color: Colors.grey, size: height * 0.10),
+              ],
+            )
+          : Text(
+              subtitle,
+              style: TextStyle(
+                color: Colors.white54,
+                fontSize: 12,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
     );
   }
 }

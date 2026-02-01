@@ -4,7 +4,7 @@ import '../models/message.dart';
 class Chat {
   final String uid;
   final String currentUserUid;
-  final bool activity;
+  final bool activity; 
   final bool group;
   final List<ChatUser> members;
   List<ChatMessage> messages;
