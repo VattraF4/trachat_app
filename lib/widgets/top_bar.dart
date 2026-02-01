@@ -25,7 +25,7 @@ class TopBar extends StatelessWidget {
   }
 
   Widget _buildUI() {
-    return SizedBox(
+    return Container(
       height: _deviceHeigh * 0.12,
       width: _deviceWidth,
       child: Row(
