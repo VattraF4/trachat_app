@@ -10,6 +10,9 @@ import '../provider/chat_page_provider.dart';
 import '../widgets/top_bar.dart';
 import '../widgets/custom_list_view_tiles.dart';
 
+//Model
+import '../models/chat.dart';
+
 class ChatsPage extends StatefulWidget {
   const ChatsPage({super.key});
 
@@ -76,7 +79,28 @@ class _ChatsPageState extends State<ChatsPage> {
   }
 
   Widget _chatsList() {
-    return Container(child: _chatTile());
+    List<Chat>? chats = _chatPageProvider.chats;
+    print(chats);
+    return Expanded(
+      child: (() {
+        if (chats != null) {
+          if (chats.isNotEmpty) {
+            return ListView.builder(
+              itemCount: chats.length,
+              itemBuilder: (BuildContext context, int index) {
+                return _chatTile();
+              },
+            );
+          } else {
+            return Center(
+              child: CircularProgressIndicator(color: Colors.white),
+            );
+          }
+        } else {
+          return Center(child: CircularProgressIndicator(color: Colors.white));
+        }
+      }()),
+    );
   }
 
   Widget _chatTile() {
