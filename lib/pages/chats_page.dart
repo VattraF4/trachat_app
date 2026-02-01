@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:get_it/get_it.dart';
+// import 'package:get_it/get_it.dart';
 
 //Provider
 import '../provider/authenticator_provider.dart';
@@ -47,7 +47,7 @@ class _ChatsPageState extends State<ChatsPage> {
           TopBar(
             "Chats",
             primaryAction: IconButton(
-              icon: Icon(Icons.logout, color: Colors.white),
+              icon: Icon(Icons.logout, color: Colors.blueAccent),
               onPressed: () {
                 _auth.logout();
               },
