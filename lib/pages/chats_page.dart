@@ -7,6 +7,7 @@ import '../provider/authenticator_provider.dart';
 
 //Widget
 import '../widgets/top_bar.dart';
+import '../widgets/custom_list_view_tiles.dart';
 
 class ChatsPage extends StatefulWidget {
   const ChatsPage({super.key});
@@ -53,6 +54,15 @@ class _ChatsPageState extends State<ChatsPage> {
               },
             ),
             secondaryAction: null,
+          ),
+          CustomListViewTile(
+            height: _deviceHeigh * 0.10,
+            title: "Yan Pich",
+            subtitle: "Hi Pro",
+            imagePath: "https://i.pravatar.cc/300",
+            isActive: false,
+            isAcitivty: false,
+            onTap: () {},
           ),
         ],
       ),

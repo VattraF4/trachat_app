@@ -1,4 +1,6 @@
 //package
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
@@ -86,8 +88,10 @@ class AuthenticatorProvider extends ChangeNotifier {
       return credential.user!.uid;
     } on FirebaseAuthException {
       print("Error Registerin user");
+      return null;
     } catch (e) {
       print(e);
+      return null;
     }
   }
 
