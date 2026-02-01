@@ -34,8 +34,13 @@ class CustomListViewTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: () => onTap(),
-      minVerticalPadding: height * 0.20,
-      
+      minVerticalPadding: height * 0.1,
+      leading: RoundedImageNetworkIndicator(
+        key: UniqueKey(),
+        imagePath: imagePath,
+        size: height / 2,
+        isActive: isActive,
+      ),
       title: Text(
         title,
         style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
