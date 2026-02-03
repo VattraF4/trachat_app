@@ -23,7 +23,7 @@ class DatabaseService {
     try {
       await _db.collection(USER_COLLECTION).doc(uid).set({
         "email": email,
-        "image": imageUrl,
+        "imageUrl": imageUrl,
         "lastActive": DateTime.now().toUtc(),
         "name": name,
       });

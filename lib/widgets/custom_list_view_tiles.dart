@@ -15,7 +15,7 @@ class CustomListViewTile extends StatelessWidget {
   final String subtitle;
   final String imagePath;
   final bool isActive; // Use to show online status
-  final bool isAcitivty; // Use to show activity like typing message 
+  final bool isAcitivty; // Use to show activity like typing message
   final Function onTap;
 
   //Constructor
@@ -34,7 +34,7 @@ class CustomListViewTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: () => onTap(),
-      minVerticalPadding: height * 0.1,
+      minVerticalPadding: height * 0.10,
       leading: RoundedImageNetworkIndicator(
         key: UniqueKey(),
         imagePath: imagePath,

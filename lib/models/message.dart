@@ -32,7 +32,7 @@ class ChatMessage {
       content: json["content"],
       type: messageType,
       senderID: json["sender_id"],
-      sendtime: (json["timestamp"] as Timestamp).toDate(),
+      sendtime: (json["send_time"] as Timestamp).toDate(),
     );
   }
 
@@ -54,7 +54,7 @@ class ChatMessage {
       'content': content,
       'type': messageType,
       'sender_id': senderID,
-      'timestamp': Timestamp.fromDate(sendtime),
+      'send_time': Timestamp.fromDate(sendtime),
     };
   }
 }

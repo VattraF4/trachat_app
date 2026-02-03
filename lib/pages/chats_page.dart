@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trachat_app/models/message.dart';
+import 'package:trachat_app/models/users.dart';
 // import 'package:get_it/get_it.dart';
 
 //Provider
@@ -88,7 +90,7 @@ class _ChatsPageState extends State<ChatsPage> {
             return ListView.builder(
               itemCount: chats.length,
               itemBuilder: (BuildContext context, int index) {
-                return _chatTile();
+                return _chatTile(chats[index]);
               },
             );
           } else {
@@ -103,13 +105,23 @@ class _ChatsPageState extends State<ChatsPage> {
     );
   }
 
-  Widget _chatTile() {
+  Widget _chatTile(Chat chat) {
+    List<ChatUser> recipients = chat.recipient();
+    bool isActive = recipients.any((doc) => doc.wasRecentlyActiveHours());
+    String subtitle = "";
+    if (chat.messages.isNotEmpty) {
+      subtitle = chat.messages.first.type != MessageType.TEXT
+          ? "Media Attachment"
+          : chat.messages.first.content;
+      print(chat.imageURL());
+    }
+
     return CustomListViewTile(
       height: _deviceHeigh * 0.15,
-      title: "Yan Pich",
-      subtitle: "Hi Pro",
-      imagePath: "https://i.pravatar.cc/300?image=2",
-      isActive: true,
+      title: chat.title(),
+      subtitle: subtitle,
+      imagePath: chat.imageURL(),
+      isActive: isActive,
       isAcitivty: false,
       onTap: () {},
     );

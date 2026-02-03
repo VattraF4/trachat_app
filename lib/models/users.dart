@@ -40,13 +40,13 @@ class ChatUser {
     return "${lastActive.day}/${lastActive.month}/${lastActive.year}";
   }
 
-  //if lastActive is less than 7 days it will return true
+  //if lastActive is less than 1 days it will return true
   bool wasRecentlyActiveDays() {
-    return lastActive.isAfter(DateTime.now().subtract(const Duration(days: 7)));
+    return lastActive.isAfter(DateTime.now().subtract(const Duration(days: 1)));
   }
 
-  //if lastActive is less than 24 hours it will return true
+  //if lastActive is less than 1 minute it will return true
   bool wasRecentlyActiveHours() {
-    return DateTime.now().difference(lastActive).inHours < 24;
+    return DateTime.now().difference(lastActive).inHours < 1 / 60;
   }
 }
