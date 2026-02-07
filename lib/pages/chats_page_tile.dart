@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:trachat_app/models/message.dart';
 import 'package:trachat_app/models/users.dart';
-// import 'package:get_it/get_it.dart';
 
 //Provider
 import '../provider/authenticator_provider.dart';
@@ -14,6 +14,12 @@ import '../widgets/custom_list_view_tiles.dart';
 
 //Model
 import '../models/chat.dart';
+
+//Service
+import '../services/navigation_service.dart';
+
+//Pages
+import '../pages/chat_page.dart';
 
 class ChatsPageTile extends StatefulWidget {
   const ChatsPageTile({super.key});
@@ -27,6 +33,7 @@ class _ChatsPageTileState extends State<ChatsPageTile> {
   late double _deviceWidth;
 
   late AuthenticatorProvider _auth;
+  late NavigationService _navigation;
   late ChatPageProvider _chatPageProvider;
   @override
   Widget build(BuildContext context) {
@@ -34,6 +41,7 @@ class _ChatsPageTileState extends State<ChatsPageTile> {
     _deviceWidth = MediaQuery.of(context).size.width;
 
     _auth = Provider.of<AuthenticatorProvider>(context);
+    _navigation = GetIt.instance<NavigationService>();
 
     return MultiProvider(
       providers: [
@@ -123,7 +131,9 @@ class _ChatsPageTileState extends State<ChatsPageTile> {
       imagePath: chat.imageURL(),
       isActive: isActive,
       isAcitivty: false,
-      onTap: () {},
+      onTap: () {
+        _navigation.navigateToPage(ChatPage(chat: chat));
+      },
     );
   }
 }
