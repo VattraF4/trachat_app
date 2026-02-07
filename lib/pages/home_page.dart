@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:trachat_app/pages/users_page.dart';
 
 //Pages
-import '../pages/chats_page.dart';
+import 'chats_page_tile.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,7 +14,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int currentPage = 0;
-  final List<Widget> _page = [ChatsPage(), UsersPage() ];
+  final List<Widget> _page = [ChatsPageTile(), UsersPage()];
 
   @override
   Widget build(BuildContext context) {

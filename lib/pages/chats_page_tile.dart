@@ -15,14 +15,14 @@ import '../widgets/custom_list_view_tiles.dart';
 //Model
 import '../models/chat.dart';
 
-class ChatsPage extends StatefulWidget {
-  const ChatsPage({super.key});
+class ChatsPageTile extends StatefulWidget {
+  const ChatsPageTile({super.key});
 
   @override
-  State<ChatsPage> createState() => _ChatsPageState();
+  State<ChatsPageTile> createState() => _ChatsPageTileState();
 }
 
-class _ChatsPageState extends State<ChatsPage> {
+class _ChatsPageTileState extends State<ChatsPageTile> {
   late double _deviceHeigh;
   late double _deviceWidth;
 
